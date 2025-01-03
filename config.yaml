@@ -10,8 +10,8 @@ metrics:
 logo_path: E:\Topici\Dream\download.png
 dataset_name: 'FACEDDataset'
 num_target_class: 9
-
-io_path: ".torcheeg/datasets_1735593565489_9a9Qv"
+ground_truth: Health status (abnormal or normal) # Target label for regression 
+split_ratio: "80:20" # split ratio for dataset
 
 # Preprocessing steps applied to the data
 preprocess_steps: |
@@ -20,6 +20,8 @@ preprocess_steps: |
 
 model_type: Convolutional Neural Net # Type of the model 
 learning_approach: Supervised # Learning setting
+
+io_path: ".torcheeg/datasets_1735593565489_9a9Qv"
 
 # Model´s Input (as a list) .
 model_input: 
