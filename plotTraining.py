@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import os
+
 save_dir = './logs'
 os.makedirs(save_dir, exist_ok=True)
 
@@ -11,26 +12,27 @@ def plot_training_validation_stats(accuracy_stats, loss_stats, save_dir=None):
     val_loss = loss_stats['val']
 
     # Plot accuracy
-    plt.figure(figsize=(12, 6))
-    plt.subplot(1, 2, 1)
+    plt.figure(figsize=(8, 6))
     plt.plot(train_acc, label='Train Accuracy')
     plt.plot(val_acc, label='Validation Accuracy')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.title('Training and Validation Accuracy')
     plt.legend()
+    # Save the accuracy plot
+    if save_dir:
+        plt.savefig(f'{save_dir}/training_validation_accuracy.png')
+    plt.show()
 
     # Plot loss
-    plt.subplot(1, 2, 2)
+    plt.figure(figsize=(8, 6))
     plt.plot(train_loss, label='Train Loss')
     plt.plot(val_loss, label='Validation Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('Training and Validation Loss')
     plt.legend()
-
-    # Save the plot
+    # Save the loss plot
     if save_dir:
-        plt.savefig(f'{save_dir}/training_validation_stats.png')
-
+        plt.savefig(f'{save_dir}/training_validation_loss.png')
     plt.show()

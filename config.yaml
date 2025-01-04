@@ -67,8 +67,8 @@ uncertainty_describe: |
 
 # Paths to all the figures
 data_figpath:  E:\Topici\logs\confidence_intervals.png
-loss_figpath:  E:\Topici\logs\training_validation_stats.png
-acc_figpath:   E:\Topici\logs\training_validation_stats.png
+loss_figpath:  E:\Topici\logs\training_validation_loss.png
+acc_figpath:   E:\Topici\logs\training_validation_accuracy.png
 cm_figpath:    E:\Topici\logs\confusion_matrix.png
 uncertainty_figpath:  E:\Topici\logs\confidence_intervals.png
 result_table_figpath: E:\Topici\logs\confidence_intervals.png
