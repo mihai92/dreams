@@ -11,7 +11,7 @@ import numpy as np
 from tqdm import tqdm
 from plotConfusion import plot_confusion_matrix
 from plotTraining import plot_training_validation_stats
-from plotMetrics import plot_metrics_table
+from plotMetrics import plot_metrics_table, plot_metrics_table_as_image
 from plotConfidence import plot_confidence_intervals
 from evaluateModel import evaluate_model
 from plotClassDistribution import plot_class_distribution
@@ -187,6 +187,7 @@ plot_class_distribution(dataset, save_dir='./logs')
 # Additional evaluation
 results = evaluate_model(model=model, test_loader=train_loader, criterion=criterion)
 plot_metrics_table(results, save_dir='./logs')
+plot_metrics_table_as_image(results, save_dir='./logs')
 
 # Collect predictions and their probabilities
 predictions = []

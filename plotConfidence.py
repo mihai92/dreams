@@ -20,3 +20,4 @@ def plot_confidence_intervals(predictions, save_dir=None):
     if save_dir:
         plt.savefig(f'{save_dir}/confidence_intervals.png')
     plt.show()
+    plt.close()

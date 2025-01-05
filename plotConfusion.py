@@ -16,3 +16,4 @@ def plot_confusion_matrix(y_true, y_pred, labels, save_dir=None):
     if save_dir:
         plt.savefig(f'{save_dir}/confusion_matrix.png')
     plt.show()
+    plt.close()

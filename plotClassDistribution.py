@@ -20,3 +20,4 @@ def plot_class_distribution(dataset, save_dir=None):
     if save_dir:
         plt.savefig(f'{save_dir}/data_characteristics.png')
     plt.show()
+    plt.close()
