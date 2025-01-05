@@ -66,7 +66,7 @@ uncertainty_describe: |
   and performance of the model.
 
 # Paths to all the figures
-data_figpath:  E:\Topici\logs\confidence_intervals.png
+data_figpath:  E:\Topici\logs\data_characteristics.png
 loss_figpath:  E:\Topici\logs\training_validation_loss.png
 acc_figpath:   E:\Topici\logs\training_validation_accuracy.png
 cm_figpath:    E:\Topici\logs\confusion_matrix.png

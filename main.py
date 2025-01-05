@@ -14,6 +14,7 @@ from plotTraining import plot_training_validation_stats
 from plotMetrics import plot_metrics_table
 from plotConfidence import plot_confidence_intervals
 from evaluateModel import evaluate_model
+from plotClassDistribution import plot_class_distribution
 
 from torch.utils.data import DataLoader, random_split
 from torcheeg.datasets import FACEDDataset
@@ -33,7 +34,7 @@ def save_ckp(state, is_best, checkpoint_path, best_model_path):
         torch.save(state, best_model_path)
 
 data_folder = "./Processed_data"
-io_path = ".torcheeg\datasets_1735593565489_9a9Qv"
+io_path = ".torcheeg\datasets_1736033063491_oNi60"
 
 os.makedirs('./logs', exist_ok=True) #NOSONAR
 
@@ -179,6 +180,9 @@ with torch.no_grad():
 
 # Plot confusion matrix
 plot_confusion_matrix(y_true=y_true, y_pred=y_pred, labels=class_names, save_dir='./logs')
+
+# Plot data distribution
+plot_class_distribution(dataset, save_dir='./logs')
 
 # Additional evaluation
 results = evaluate_model(model=model, test_loader=train_loader, criterion=criterion)
