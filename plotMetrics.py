@@ -2,26 +2,36 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
+# Create a directory for saving plots, if it doesn't exist
 save_dir = './logs'
 os.makedirs(save_dir, exist_ok=True)
 
 def plot_metrics_table(metrics, save_dir=None):
-    # Save metrics as CSV
-    df = pd.DataFrame([metrics], columns=["Accuracy", "Precision", "Recall", "F1-Score", "Loss"])
-    print(df)
+    """
+    Saves metrics as a CSV file and prints the metrics in tabular form.
 
+    """
+    # Convert metrics to a DataFrame
+    df = pd.DataFrame([metrics], columns=["Accuracy", "Precision", "Recall", "F1-Score", "Loss"])
+    print(df)  # Print the metrics table
+
+    # Save metrics as a CSV file if `save_dir` is provided
     if save_dir:
         df.to_csv(f'{save_dir}/metrics.csv', index=False)
 
 def plot_metrics_table_as_image(metrics, save_dir=None):
+    """
+    Saves metrics as an image and displays them in tabular form.
+
+    """
     # Create a DataFrame for the metrics
     df = pd.DataFrame([metrics], columns=["Accuracy", "Precision", "Recall", "F1-Score", "Loss"])
-    
+
     # Create the figure and axis
     fig, ax = plt.subplots()
     ax.axis('off')  # Turn off the axis
-    
-    # Create the table
+
+    # Create the table and customize font size and column width
     table = ax.table(cellText=df.values, colLabels=df.columns, loc='center')
     table.auto_set_font_size(False)
     table.set_fontsize(10)

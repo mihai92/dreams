@@ -1,38 +1,41 @@
 import matplotlib.pyplot as plt
 import os
 
+# Create a directory for saving plots, if it doesn't exist
 save_dir = './logs'
 os.makedirs(save_dir, exist_ok=True)
 
 def plot_training_validation_stats(accuracy_stats, loss_stats, save_dir=None):
+    """
+    Plots training and validation accuracy and loss over epochs.
+
+    """
     # Unpack statistics
     train_acc = accuracy_stats['train']
     val_acc = accuracy_stats['val']
     train_loss = loss_stats['train']
     val_loss = loss_stats['val']
 
-    # Plot accuracy
-    plt.figure(figsize=(8, 6))
-    plt.plot(train_acc, label='Train Accuracy')
-    plt.plot(val_acc, label='Validation Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.title('Training and Validation Accuracy')
-    plt.legend()
-    # Save the accuracy plot
+    # Plot training and validation accuracy
+    plt.figure(figsize=(8, 6))  # Set the figure size
+    plt.plot(train_acc, label='Train Accuracy')  # Line plot for training accuracy
+    plt.plot(val_acc, label='Validation Accuracy')  # Line plot for validation accuracy
+    plt.xlabel('Epoch')  # Label for the x-axis
+    plt.ylabel('Accuracy')  # Label for the y-axis
+    plt.title('Training and Validation Accuracy')  # Title of the plot
+    plt.legend()  # Add legend
     if save_dir:
-        plt.savefig(f'{save_dir}/training_validation_accuracy.png')
+        plt.savefig(f'{save_dir}/training_validation_accuracy.png')  # Save the plot if `save_dir` is provided
     plt.show()
 
-    # Plot loss
-    plt.figure(figsize=(8, 6))
-    plt.plot(train_loss, label='Train Loss')
-    plt.plot(val_loss, label='Validation Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.title('Training and Validation Loss')
-    plt.legend()
-    # Save the loss plot
+    # Plot training and validation loss
+    plt.figure(figsize=(8, 6))  # Set the figure size
+    plt.plot(train_loss, label='Train Loss')  # Line plot for training loss
+    plt.plot(val_loss, label='Validation Loss')  # Line plot for validation loss
+    plt.xlabel('Epoch')  # Label for the x-axis
+    plt.ylabel('Loss')  # Label for the y-axis
+    plt.title('Training and Validation Loss')  # Title of the plot
+    plt.legend()  # Add legend
     if save_dir:
-        plt.savefig(f'{save_dir}/training_validation_loss.png')
+        plt.savefig(f'{save_dir}/training_validation_loss.png')  # Save the plot if `save_dir` is provided
     plt.show()
