@@ -1,6 +1,8 @@
 import sys
 import webbrowser
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QFrame, QLineEdit, QHBoxLayout, QTextEdit
+import yaml
+import os
 
 class UiTopici(QWidget):
     def __init__(self):
@@ -52,6 +54,7 @@ class UiTopici(QWidget):
 
 
         self.button_antrenare=QPushButton("Train the dataset")
+        self.button_antrenare.clicked.connect(self.modify_config)
         self.layout.addWidget(self.button_antrenare)
 
         self.button_raport=QPushButton("View the report")
@@ -64,6 +67,7 @@ class UiTopici(QWidget):
 
         self.right_layout = None
         self.right_layout_widgets = []
+        self.text_area = None
         self.setLayout(self.main_layout)
 
 
@@ -81,6 +85,29 @@ class UiTopici(QWidget):
     def view_the_report(self):
         url = "https://www.example.com"
         webbrowser.open(url)
+    
+
+    def modify_config(self):
+        try:
+            if self.right_layout:
+                
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+
+                config_file_path = os.path.join(script_dir, "config.yaml")
+
+  
+                with open(config_file_path, "r") as file:
+                    config_data = yaml.safe_load(file)
+
+                describe_overview = self.text_area.toPlainText()  
+                config_data["describe_overview"] = describe_overview
+                with open(config_file_path, "w") as file:
+                    yaml.safe_dump(config_data, file)
+
+            print(f"Updated config.yaml: {config_data}")
+
+        except Exception as e:
+            print(f"An error occurred while modifying the config file: {e}")
 
     def toggle_new_layout(self):
 
@@ -92,6 +119,7 @@ class UiTopici(QWidget):
 
             self.main_layout.removeItem(self.right_layout)
             self.right_layout = None
+            self.text_area= None
         else:
             self.right_layout = QVBoxLayout()
 
@@ -99,10 +127,10 @@ class UiTopici(QWidget):
             self.right_layout.addWidget(right_label)
             self.right_layout_widgets.append(right_label)
 
-            text_area = QTextEdit()
-            text_area.setPlaceholderText("Enter your text here...")
-            self.right_layout.addWidget(text_area)
-            self.right_layout_widgets.append(text_area)
+            self.text_area = QTextEdit()
+            self.text_area.setPlaceholderText("Enter your text here...")
+            self.right_layout.addWidget(self.text_area)
+            self.right_layout_widgets.append(self.text_area)
 
             self.main_layout.addLayout(self.right_layout)
 
