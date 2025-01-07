@@ -27,7 +27,7 @@ from torcheeg import transforms
 from torcheeg.datasets.constants import FACED_CHANNEL_LOCATION_DICT
 
 # Utility to generate model cards
-from dreams_mc.make_model_card import generate_modelcard
+
 
 # Model architecture for EEG-based classification
 from torcheeg.models.cnn import TSCeption
@@ -259,9 +259,5 @@ predictions = np.array(predictions)
 # Call plot_confidence_intervals with correct predictions
 plot_confidence_intervals(predictions=predictions, save_dir='./logs')
 
-# Generate model card
-print("Generating Model Card....")
-config_file_path = './config.yaml'
-output_path = './logs/model_card.html'
-version_num = '1.0'
-generate_modelcard(config_file_path, output_path, version_num)
+
+

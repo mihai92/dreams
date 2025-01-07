@@ -3,11 +3,14 @@ import webbrowser
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QFrame, QLineEdit, QHBoxLayout, QTextEdit
 import yaml
 import os
+from dreams_mc.make_model_card import generate_modelcard
 
 class UiTopici(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.input_path = None
+        self.output_path = None
 
         self.setWindowTitle("ProiectTopici")
         self.setGeometry(100, 100, 700, 500)
@@ -76,15 +79,27 @@ class UiTopici(QWidget):
         path1 = QFileDialog.getExistingDirectory(self, "Select Directory for Path 1")
         if path1:
             self.label.setText(f"Input: {path1}")
+            self.input_path = path1
 
     def choose_path2(self):
         path2 = QFileDialog.getExistingDirectory(self, "Select Directory for Path 2")
         if path2:
             self.label.setText(f"Output: {path2}")
+            self.output_path = path2
 
     def view_the_report(self):
-        url = "https://www.example.com"
-        webbrowser.open(url)
+        if(self.output_path):
+            print("Generating Model Card....")
+            config_file_path = './config.yaml'
+            output_path = self.output_path+'/model_card.html'
+            version_num = '1.0'
+            generate_modelcard(config_file_path, output_path, version_num)
+            url = self.output_path+"model_card"
+            webbrowser.open(url)
+        
+        else: 
+            print("Please set output path before generating the report.")
+            return
     
 
     def modify_config(self):
@@ -133,6 +148,9 @@ class UiTopici(QWidget):
             self.right_layout_widgets.append(self.text_area)
 
             self.main_layout.addLayout(self.right_layout)
+
+
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
