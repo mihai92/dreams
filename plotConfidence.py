@@ -36,6 +36,7 @@ def plot_confidence_intervals(predictions, save_dir=None):
         with open(config_file_path, "r") as file:
             config_data = yaml.safe_load(file)
         config_data["uncertainty_figpath"]=save_dir+'/confidence_intervals.png'
+        print(config_data["uncertainty_figpath"])
         with open(config_file_path, "w") as file:
             yaml.safe_dump(config_data, file)
 

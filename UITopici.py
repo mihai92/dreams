@@ -94,7 +94,8 @@ class UiTopici(QWidget):
             output_path = self.output_path+'/model_card.html'
             version_num = '1.0'
             generate_modelcard(config_file_path, output_path, version_num)
-            url = self.output_path+"model_card"
+            url = self.output_path+"/model_card.html"
+            print (url)
             webbrowser.open(url)
         
         else: 
