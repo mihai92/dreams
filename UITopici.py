@@ -84,7 +84,7 @@ class UiTopici(QWidget):
     def choose_path2(self):
         path2 = QFileDialog.getExistingDirectory(self, "Select Directory for Path 2")
         if path2:
-            self.label.setText(f"Output: {path2}")
+            self.label2.setText(f"Output: {path2}")
             self.output_path = path2
 
     def view_the_report(self):
