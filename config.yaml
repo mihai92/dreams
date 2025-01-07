@@ -10,7 +10,7 @@ metrics:
 logo_path: E:\Topici\Dream\download.png
 dataset_name: 'FACEDDataset'
 num_target_class: 9
-ground_truth: Health status (abnormal or normal) # Target label for regression 
+ground_truth: Health status (abnormal or normal) # Target label for regression
 split_ratio: "80:20" # split ratio for dataset
 
 # Preprocessing steps applied to the data
@@ -52,12 +52,12 @@ additional_info: 0.75 M parameters  # Additional information about the model
 
 
 # Describing limitations about the model
-limitation_details: 
+limitation_details:
   - The training dataset inherits class imbalance, with a male-to-female ratio of 3:1, which could potentially lead to fairness concerns.
   - Noisy channels, missing channels in the data will degrade the model's performance.
 
 # Description about the model´s performance
-performance_comments: 
+performance_comments:
   Here you can dig into the model's performance on a selection of evaluation datasets drawn from different data sources than the training data.
 
 # Describe about the uncertanity of the model´s prediction.
@@ -73,7 +73,7 @@ cm_figpath:    E:\Topici\logs\confusion_matrix.png
 uncertainty_figpath:  E:\Topici\logs\confidence_intervals.png
 result_table_figpath: E:\Topici\logs\metrics_table.png
 
-# List of references 
+# List of references
 references: |
   <ol>
 
