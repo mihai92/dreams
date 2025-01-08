@@ -3,21 +3,22 @@ import webbrowser
 from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QFrame, QLineEdit, QHBoxLayout, QTextEdit, QDialog, QFormLayout, QSpinBox)
 import yaml
 import os
-from dreams_mc.make_model_card import generate_modelcard
 
 class ConfigEditorDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Edit Model Details")
-        self.setGeometry(200, 200, 400, 300)
+        self.setGeometry(200, 200, 400, 400)
 
         self.layout = QFormLayout(self)
 
-        self.input_field = QLineEdit(self)
-        self.layout.addRow("Input:", self.input_field)
+        self.input_field = QTextEdit(self)
+        self.input_field.setPlaceholderText("Enter each input on a new line")
+        self.layout.addRow("Model Input:", self.input_field)
 
-        self.output_field = QLineEdit(self)
-        self.layout.addRow("Output:", self.output_field)
+        self.output_field = QTextEdit(self)
+        self.output_field.setPlaceholderText("Enter each output on a new line")
+        self.layout.addRow("Model Output:", self.output_field)
 
         self.learning_rate_field = QLineEdit(self)
         self.learning_rate_field.setPlaceholderText("e.g., 1e-05")
@@ -42,8 +43,10 @@ class ConfigEditorDialog(QDialog):
             with open(config_file_path, "r") as file:
                 config_data = yaml.safe_load(file)
 
-            config_data["model_input"] = [self.input_field.text()]
-            config_data["model_output"] = [self.output_field.text()]
+            model_input = self.input_field.toPlainText().strip().split('\n')
+            model_output = self.output_field.toPlainText().strip().split('\n')
+            config_data["model_input"] = [line.strip() for line in model_input if line.strip()]
+            config_data["model_output"] = [line.strip() for line in model_output if line.strip()]
             config_data["learning_rate"] = self.learning_rate_field.text()
             config_data["batch_size"] = self.batch_size_field.value()
             config_data["additional_info"] = self.additional_info_field.text()
@@ -60,9 +63,6 @@ class UiTopici(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.input_path = None
-        self.output_path = None
-
         self.setWindowTitle("ProiectTopici")
         self.setGeometry(100, 100, 700, 500)
 
@@ -74,6 +74,7 @@ class UiTopici(QWidget):
 
         self.label = QLabel("Choose the path of the dataset")
         self.h_layout1.addWidget(self.label)
+
         self.add_content = QPushButton("Configure descriptions")
         self.add_content.clicked.connect(self.toggle_new_layout)
         self.h_layout1.addWidget(self.add_content)
@@ -98,7 +99,7 @@ class UiTopici(QWidget):
         self.label3 = QLabel("Set the number of epochs desired")
         self.layout.addWidget(self.label3)
         self.input_field = QLineEdit(self)
-        self.input_field.setPlaceholderText("Enter the number of epochs you wish to have")
+        self.input_field.setPlaceholderText("Enter the number of epochs, you wish to have")
         self.layout.addWidget(self.input_field)
 
         self.line = QFrame()
@@ -126,32 +127,22 @@ class UiTopici(QWidget):
         path1 = QFileDialog.getExistingDirectory(self, "Select Directory for Path 1")
         if path1:
             self.label.setText(f"Input: {path1}")
-            self.input_path = path1
 
     def choose_path2(self):
         path2 = QFileDialog.getExistingDirectory(self, "Select Directory for Path 2")
         if path2:
-            self.label2.setText(f"Output: {path2}")
-            self.output_path = path2
+            self.label.setText(f"Output: {path2}")
 
     def view_the_report(self):
-        if self.output_path:
-            print("Generating Model Card....")
-            config_file_path = './config.yaml'
-            output_path = self.output_path + '/model_card.html'
-            version_num = '1.0'
-            generate_modelcard(config_file_path, output_path, version_num)
-            url = self.output_path + "/model_card.html"
-            print(url)
-            webbrowser.open(url)
-        else:
-            print("Please set output path before generating the report.")
-            return
+        url = "https://www.example.com"
+        webbrowser.open(url)
 
     def modify_config(self):
         try:
             if self.right_layout:
+
                 script_dir = os.path.dirname(os.path.abspath(__file__))
+
                 config_file_path = os.path.join(script_dir, "config.yaml")
 
                 with open(config_file_path, "r") as file:
@@ -160,7 +151,7 @@ class UiTopici(QWidget):
                 describe_overview = self.text_area.toPlainText()
                 config_data["describe_overview"] = describe_overview
                 with open(config_file_path, "w") as file:
-                    yaml.safe_dump(config_data, file)
+                    yaml.dump(config_data, file, default_flow_style=False, sort_keys=False, width=1000)
 
             print(f"Updated config.yaml: {config_data}")
 
@@ -168,10 +159,13 @@ class UiTopici(QWidget):
             print(f"An error occurred while modifying the config file: {e}")
 
     def toggle_new_layout(self):
+
         if self.right_layout:
+
             for widget in self.right_layout_widgets:
                 widget.deleteLater()
             self.right_layout_widgets.clear()
+
             self.main_layout.removeItem(self.right_layout)
             self.right_layout = None
             self.text_area = None
