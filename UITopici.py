@@ -4,11 +4,13 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFi
 import yaml
 import os
 from dreams_mc.make_model_card import generate_modelcard
-
+from PyQt5.QtGui import QIntValidator
+from main import train_dataset
 class UiTopici(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.safeguard = False
         self.input_path = None
         self.output_path = None
 
@@ -46,6 +48,8 @@ class UiTopici(QWidget):
         self.layout.addWidget(self.label3)
         self.input_field = QLineEdit(self)
         self.input_field.setPlaceholderText("Enter the number of epochs, you wish to have")
+        validator = QIntValidator(0, 9999, self.input_field)
+        self.input_field.setValidator(validator)
         self.layout.addWidget(self.input_field)
 
         self.line = QFrame()
@@ -57,7 +61,7 @@ class UiTopici(QWidget):
 
 
         self.button_antrenare=QPushButton("Train the dataset")
-        self.button_antrenare.clicked.connect(self.modify_config)
+        self.button_antrenare.clicked.connect(self.train_button)
         self.layout.addWidget(self.button_antrenare)
 
         self.button_raport=QPushButton("View the report")
@@ -88,6 +92,7 @@ class UiTopici(QWidget):
             self.output_path = path2
 
     def view_the_report(self):
+        self.modify_config()
         if(self.output_path):
             print("Generating Model Card....")
             config_file_path = './config.yaml'
@@ -150,6 +155,17 @@ class UiTopici(QWidget):
 
             self.main_layout.addLayout(self.right_layout)
 
+    def train_button(self):
+        try:
+            self.safeguard = True
+            number = self.input_field.text()
+            number = int(number)
+            train_dataset(number)
+            self.safeguard = False
+        except Exception as e:
+            self.safeguard = False
+            print(f"An error occurred while generating the report: {e}")
+        
 
 
 
